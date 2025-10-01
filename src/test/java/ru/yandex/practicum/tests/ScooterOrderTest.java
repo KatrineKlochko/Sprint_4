@@ -7,12 +7,10 @@ import org.junit.runners.Parameterized;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.yandex.practicum.MainPage;
 import ru.yandex.practicum.OrderPage;
 
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -51,11 +49,11 @@ public class ScooterOrderTest {
         this.comment = comment;
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "Заказ: {1} {2}, метро: {4}, срок: {8}, цвет: {9}")
     public static Collection<Object[]> getData() {
         return Arrays.asList(new Object[][]{
-                {MainPage.orderButtonTop, "Вася", "Пупкин", "ул. Ленина, д. 10", "Лубянка", "+79261234567", OrderPage.nextButton, 1, "трое суток", "чёрный жемчуг", "Позвоните при доставке"},
-                {MainPage.orderButtonHero, "Петя", "Петров", "пр-т Мира, д. 25", "Лихоборы", "+79876543210", OrderPage.nextButton, 2, "сутки", "серая безысходность", "Оставьте у двери"}
+                {By.className(MainPage.ORDER_BUTTON_TOP_CLASS_NAME), "Вася", "Пупкин", "ул. Ленина, д. 10", "Лубянка", "+79261234567", By.className(OrderPage.NEXT_BUTTON_CLASS_NAME), 1, "трое суток", "чёрный жемчуг", "Позвоните при доставке"},
+                {By.className(MainPage.ORDER_BUTTON_HERO_CLASS_NAME), "Петя", "Петров", "пр-т Мира, д. 25", "Лихоборы", "+79876543210", By.className(OrderPage.NEXT_BUTTON_CLASS_NAME), 2, "сутки", "серая безысходность", "Оставьте у двери"}
         });
     }
 
@@ -65,52 +63,31 @@ public class ScooterOrderTest {
         WebDriver driver = factory.getDriver();
         WebDriverWait wait = factory.getWait();
 
-        wait.until(ExpectedConditions.elementToBeClickable(orderButton)).click();
+        MainPage mainPage = new MainPage(driver, wait);
+        OrderPage orderPage = new OrderPage(driver, wait);
 
-        driver.findElement(OrderPage.firstNameField).sendKeys(firstName);
-        driver.findElement(OrderPage.lastNameField).sendKeys(lastName);
-        driver.findElement(OrderPage.addressField).sendKeys(address);
 
-        WebElement metroField = wait.until(ExpectedConditions.elementToBeClickable(OrderPage.metroField));
-        metroField.sendKeys(metro);
+        mainPage.clickOnOrderButton(orderButton);
 
-        By metroSelector = By.className("select-search__select");
-        WebElement station = wait.until(ExpectedConditions.elementToBeClickable(metroSelector));
-        station.click();
+        orderPage.fillFirstName(firstName);
+        orderPage.fillLastName(lastName);
+        orderPage.fillAddress(address);
+        orderPage.selectMetro(metro);
+        orderPage.fillPhone(phone);
+        orderPage.clickNextButton(nextButton);
 
-        driver.findElement(OrderPage.phoneField).sendKeys(phone);
+        orderPage.selectDeliveryDate(daysToDelivery);
+        orderPage.selectRentPeriod(rentPeriod);
+        orderPage.selectColor(color);
+        orderPage.addComment(comment);
+        orderPage.clickFinalOrderButton();
 
-        driver.findElement(nextButton).click();
+        orderPage.confirmOrderWindow();
+        orderPage.clickOnOrderButtonYes();
 
-        WebElement dateField = wait.until(ExpectedConditions.elementToBeClickable(OrderPage.dateField));
-        dateField.click();
-        LocalDate deliveryDate = LocalDate.now().plusDays(daysToDelivery);
-        int dayOfMonth = deliveryDate.getDayOfMonth();
-        By dayLocator = OrderPage.getDeliveryDateOption(dayOfMonth);
-        WebElement dayElement = wait.until(ExpectedConditions.elementToBeClickable(dayLocator));
-        dayElement.click();
-
-        WebElement rentField = wait.until(ExpectedConditions.elementToBeClickable(OrderPage.rentField));
-        rentField.click();
-        By rentOption = OrderPage.getRentPeriodOption(rentPeriod);
-        WebElement option = wait.until(ExpectedConditions.elementToBeClickable(rentOption));
-        option.click();
-
-        By colorOption = OrderPage.getColorOption(color);
-        WebElement colorElement = wait.until(ExpectedConditions.elementToBeClickable(colorOption));
-        colorElement.click();
-
-        driver.findElement(OrderPage.commentField).sendKeys(comment);
-
-        driver.findElement(OrderPage.orderButtonFinal).click();
-
-        wait.until(ExpectedConditions.visibilityOfElementLocated(OrderPage.orderConfirmationWindow));
-        wait.until(ExpectedConditions.elementToBeClickable(OrderPage.orderButtonYes)).click();
-
-        wait.until(ExpectedConditions.visibilityOfElementLocated(OrderPage.modalWindow));
-        WebElement statusButton = wait.until(ExpectedConditions.elementToBeClickable(OrderPage.viewStatusButton));
+        WebElement statusButton = orderPage.waitForModalWindow();
         assertTrue("Модальное окно с подтверждением заказа не отображается", statusButton.isDisplayed());
-        wait.until(ExpectedConditions.elementToBeClickable(OrderPage.viewStatusButton)).click();
+        orderPage.clickViewStatusButton();
 
     }
 }

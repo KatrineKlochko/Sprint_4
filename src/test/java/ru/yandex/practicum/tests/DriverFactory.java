@@ -1,6 +1,7 @@
 package ru.yandex.practicum.tests;
 
 import org.junit.rules.ExternalResource;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -35,7 +36,7 @@ public class DriverFactory extends ExternalResource {
 
         // Клик по куки
         try {
-            WebElement cookie = wait.until(ExpectedConditions.elementToBeClickable(MainPage.cookieButton));
+            WebElement cookie = wait.until(ExpectedConditions.elementToBeClickable(By.className(MainPage.COOKIE_BUTTON_CLASS_NAME)));
             cookie.click();
         } catch (Exception ignored) {}
     }
@@ -50,13 +51,13 @@ public class DriverFactory extends ExternalResource {
     public void initDriver(){
 
         if("firefox".equals(System.getProperty("browser"))){
-            StartFirefox();
+            startFirefox();
         } else {
-            StartChrome();
+            startChrome();
         }
     }
 
-    private void StartChrome() {
+    private void startChrome() {
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--no-sandbox", "--disable-dev-shm-usage");
@@ -65,7 +66,7 @@ public class DriverFactory extends ExternalResource {
         driver.manage().window().maximize();
     }
 
-    private void StartFirefox() {
+    private void startFirefox() {
 
         FirefoxOptions options = new FirefoxOptions();
         options.addArguments("--no-sandbox", "--disable-dev-shm-usage");

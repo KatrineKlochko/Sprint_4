@@ -4,9 +4,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.yandex.practicum.MainPage;
 
 import static org.junit.Assert.assertEquals;
@@ -30,7 +27,7 @@ public class DropdownListTest {
         this.expectedAnswer = expectedAnswer;
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "Вопрос: {1}")
     public static Collection<Object[]> getAnswers(){
         return Arrays.asList(new Object[][]{
                 {0, "Сколько это стоит? И как оплатить?", "Сутки — 400 рублей. Оплата курьеру — наличными или картой."},
@@ -47,17 +44,10 @@ public class DropdownListTest {
     @Test
     public void dropdownListOpenOnClick(){
 
-        WebDriverWait wait = factory.getWait();
+        MainPage mainPage = new MainPage(factory.getDriver(), factory.getWait());
 
-        WebElement questionElement = wait.until(
-                ExpectedConditions.elementToBeClickable(MainPage.getQuestion(index)));
-        questionElement.click();
-
-        WebElement answerElement = wait.until(
-                ExpectedConditions.visibilityOfElementLocated(MainPage.getAnswer(index)));
-
-        String actualAnswer = answerElement.getText().trim();
-
+        mainPage.clickQuestion(index);
+        String actualAnswer = mainPage.getAnswerText(index);
         assertEquals("Ответ не совпадает для вопроса: " + question, expectedAnswer, actualAnswer);
     }
 
