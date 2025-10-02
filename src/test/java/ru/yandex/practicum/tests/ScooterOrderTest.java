@@ -69,18 +69,8 @@ public class ScooterOrderTest {
 
         mainPage.clickOnOrderButton(orderButton);
 
-        orderPage.fillFirstName(firstName);
-        orderPage.fillLastName(lastName);
-        orderPage.fillAddress(address);
-        orderPage.selectMetro(metro);
-        orderPage.fillPhone(phone);
-        orderPage.clickNextButton(nextButton);
-
-        orderPage.selectDeliveryDate(daysToDelivery);
-        orderPage.selectRentPeriod(rentPeriod);
-        orderPage.selectColor(color);
-        orderPage.addComment(comment);
-        orderPage.clickFinalOrderButton();
+        orderPage.fillOrderForm(firstName, lastName, address, metro, phone, nextButton);
+        orderPage.fillOrderFormOptions(daysToDelivery, rentPeriod, color, comment);
 
         orderPage.confirmOrderWindow();
         orderPage.clickOnOrderButtonYes();

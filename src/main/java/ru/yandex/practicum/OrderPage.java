@@ -147,4 +147,23 @@ public class OrderPage {
         wait.until(ExpectedConditions.elementToBeClickable(VIEW_STATUS_BUTTON)).click();
     }
 
+    //Метод заполнение формы заказа
+    public void fillOrderForm(String firstName, String lastName, String address, String metro, String phone, By nextButton) {
+        fillFirstName(firstName);
+        fillLastName(lastName);
+        fillAddress(address);
+        selectMetro(metro);
+        fillPhone(phone);
+        clickNextButton(nextButton);
+    }
+
+    //Метод заполнение опций формы заказа (доставка, цвет и тд)
+    public void fillOrderFormOptions(int daysToDelivery, String rentPeriod, String color, String comment) {
+        selectDeliveryDate(daysToDelivery);
+        selectRentPeriod(rentPeriod);
+        selectColor(color);
+        addComment(comment);
+        clickFinalOrderButton();
+    }
+
 }
