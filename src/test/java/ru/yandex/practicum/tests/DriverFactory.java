@@ -36,7 +36,7 @@ public class DriverFactory extends ExternalResource {
 
         // Клик по куки
         try {
-            WebElement cookie = wait.until(ExpectedConditions.elementToBeClickable(By.className(MainPage.COOKIE_BUTTON_CLASS_NAME)));
+            WebElement cookie = wait.until(ExpectedConditions.elementToBeClickable(MainPage.COOKIE_BUTTON));
             cookie.click();
         } catch (Exception ignored) {}
     }

@@ -52,8 +52,8 @@ public class ScooterOrderTest {
     @Parameterized.Parameters(name = "Заказ: {1} {2}, метро: {4}, срок: {8}, цвет: {9}")
     public static Collection<Object[]> getData() {
         return Arrays.asList(new Object[][]{
-                {By.className(MainPage.ORDER_BUTTON_TOP_CLASS_NAME), "Вася", "Пупкин", "ул. Ленина, д. 10", "Лубянка", "+79261234567", By.className(OrderPage.NEXT_BUTTON_CLASS_NAME), 1, "трое суток", "чёрный жемчуг", "Позвоните при доставке"},
-                {By.className(MainPage.ORDER_BUTTON_HERO_CLASS_NAME), "Петя", "Петров", "пр-т Мира, д. 25", "Лихоборы", "+79876543210", By.className(OrderPage.NEXT_BUTTON_CLASS_NAME), 2, "сутки", "серая безысходность", "Оставьте у двери"}
+                {MainPage.ORDER_BUTTON_TOP, "Вася", "Пупкин", "ул. Ленина, д. 10", "Лубянка", "+79261234567", OrderPage.NEXT_BUTTON, 1, "трое суток", "чёрный жемчуг", "Позвоните при доставке"},
+                {MainPage.ORDER_BUTTON_HERO, "Петя", "Петров", "пр-т Мира, д. 25", "Лихоборы", "+79876543210", OrderPage.NEXT_BUTTON, 2, "сутки", "серая безысходность", "Оставьте у двери"}
         });
     }
 

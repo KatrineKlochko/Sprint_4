@@ -19,7 +19,7 @@ public class OrderPage {
     }
 
     //кнопка далее
-    public static final String NEXT_BUTTON_CLASS_NAME = "Button_Middle__1CSJM";
+    public static final By NEXT_BUTTON = By.className("Button_Middle__1CSJM");
 
     //поля формы заказа
     private static final By FIRST_NAME_FIELD = By.cssSelector("input[placeholder='* Имя']");

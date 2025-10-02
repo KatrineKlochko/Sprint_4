@@ -17,13 +17,13 @@ public class MainPage {
     }
 
     // Кнопка «Заказать» (в шапке)
-    public static final String ORDER_BUTTON_TOP_CLASS_NAME = "Button_Button__ra12g";
+    public static final By ORDER_BUTTON_TOP = By.className("Button_Button__ra12g");
 
     // Кнопка «Заказать» (под заголовком)
-    public static final String ORDER_BUTTON_HERO_CLASS_NAME = "Button_Middle__1CSJM";
+    public static final By ORDER_BUTTON_HERO = By.className("Button_Middle__1CSJM");
 
     // Кнопка «да все привыкли» (принять куки)
-    public static final String COOKIE_BUTTON_CLASS_NAME = "App_CookieButton__3cvqF";
+    public static final By COOKIE_BUTTON = By.className("App_CookieButton__3cvqF");
 
     // Локатор для вопросов
     private static final String QUESTION_ELEMENT_ID = "accordion__heading-";
