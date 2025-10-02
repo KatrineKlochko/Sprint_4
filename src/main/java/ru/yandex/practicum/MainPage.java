@@ -17,13 +17,13 @@ public class MainPage {
     }
 
     // Кнопка «Заказать» (в шапке)
-    public static final By ORDER_BUTTON_TOP = By.className("Button_Button__ra12g");
+    private static final By ORDER_BUTTON_TOP = By.className("Button_Button__ra12g");
 
     // Кнопка «Заказать» (под заголовком)
-    public static final By ORDER_BUTTON_HERO = By.className("Button_Middle__1CSJM");
+    private static final By ORDER_BUTTON_HERO = By.className("Button_Middle__1CSJM");
 
     // Кнопка «да все привыкли» (принять куки)
-    public static final By COOKIE_BUTTON = By.className("App_CookieButton__3cvqF");
+    private static final By COOKIE_BUTTON = By.className("App_CookieButton__3cvqF");
 
     // Локатор для вопросов
     private static final String QUESTION_ELEMENT_ID = "accordion__heading-";
@@ -47,8 +47,23 @@ public class MainPage {
     }
 
     //Метод для клика на кнопку заказать
-    public void clickOnOrderButton(By orderButton) {
-        wait.until(ExpectedConditions.elementToBeClickable(orderButton)).click();
+    public void clickOrderButton(String buttonType) {
+        By locator;
+        switch (buttonType) {
+            case "top":
+                locator = ORDER_BUTTON_TOP;
+                break;
+            case "hero":
+                locator = ORDER_BUTTON_HERO;
+                break;
+            default:
+                throw new IllegalArgumentException("Неизвестный тип кнопки: " + buttonType);
+        }
+        wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
     }
 
+    //Метод клик на кнопку куки
+    public void clickCookieButton() {
+        wait.until(ExpectedConditions.elementToBeClickable(COOKIE_BUTTON)).click();
+    }
 }

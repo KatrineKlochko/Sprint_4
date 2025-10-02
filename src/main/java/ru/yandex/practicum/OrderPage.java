@@ -42,7 +42,7 @@ public class OrderPage {
     private static final By ORDER_CONFIRMATION_WINDOW = By.className("Order_Modal__YZ-d3");
 
     //кнопка подтверждения заказа (да)
-    private static final String ORDER_BUTTON_YES_XPATH = "//button[text()='Да']";
+    private static final By ORDER_BUTTON_YES = By.xpath("//button[text()='Да']");
 
     //модальное окно
     private static final By MODAL_WINDOW = By.className("Order_NextButton__1_rCA");
@@ -88,8 +88,8 @@ public class OrderPage {
     }
 
     //Метод клик на кнопку далее
-    public void clickNextButton(By nextButton) {
-        driver.findElement(nextButton).click();
+    public void clickNextButton() {
+        wait.until(ExpectedConditions.elementToBeClickable(NEXT_BUTTON)).click();
     }
 
     //Метод выбора даты доставки
@@ -133,7 +133,7 @@ public class OrderPage {
 
     //Метод клик на кнопку ДА в окне подтверждения заказа
     public void clickOnOrderButtonYes() {
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(ORDER_BUTTON_YES_XPATH))).click();
+        wait.until(ExpectedConditions.elementToBeClickable(ORDER_BUTTON_YES)).click();
     }
 
     //Метод ожидания модального окна
@@ -148,13 +148,13 @@ public class OrderPage {
     }
 
     //Метод заполнение формы заказа
-    public void fillOrderForm(String firstName, String lastName, String address, String metro, String phone, By nextButton) {
+    public void fillOrderForm(String firstName, String lastName, String address, String metro, String phone) {
         fillFirstName(firstName);
         fillLastName(lastName);
         fillAddress(address);
         selectMetro(metro);
         fillPhone(phone);
-        clickNextButton(nextButton);
+        clickNextButton();
     }
 
     //Метод заполнение опций формы заказа (доставка, цвет и тд)

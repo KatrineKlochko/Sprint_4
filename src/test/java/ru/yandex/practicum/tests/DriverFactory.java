@@ -35,9 +35,9 @@ public class DriverFactory extends ExternalResource {
         driver.get("https://qa-scooter.praktikum-services.ru/");
 
         // Клик по куки
+        MainPage mainPage = new MainPage(driver, wait);
         try {
-            WebElement cookie = wait.until(ExpectedConditions.elementToBeClickable(MainPage.COOKIE_BUTTON));
-            cookie.click();
+            mainPage.clickCookieButton();
         } catch (Exception ignored) {}
     }
 
